@@ -1422,17 +1422,17 @@ details.souscarte[open] > summary::after{
             <div>
               <h4 class="cache" id="t-liste-bu">Liste des bibliothèques</h4>
               <div class="carte__panneau">
-                <button type="button" class="carte__tout" data-liste="carte-liste">Vue d’ensemble</button>
-                <ul class="carte__liste" id="carte-liste" aria-labelledby="t-liste-bu"></ul>
+                <button type="button" class="carte__tout" data-liste="bu-liste">Vue d’ensemble</button>
+                <ul class="carte__liste" id="bu-liste" aria-labelledby="t-liste-bu"></ul>
               </div>
             </div>
             <div>
-              <div class="carte__map" id="carte-map" role="application"
+              <div class="carte__map" id="bu-map" role="application"
                    aria-label="Carte des bibliothèques universitaires. La liste ci-contre permet de les parcourir au clavier."></div>
-              <p class="carte__erreur" id="carte-erreur" hidden>La carte n’a pas pu se charger. La liste ci-dessus reste utilisable&nbsp;: chaque bibliothèque renvoie vers sa fiche.</p>
+              <p class="carte__erreur" id="bu-erreur" hidden>La carte n’a pas pu se charger. La liste ci-dessus reste utilisable&nbsp;: chaque bibliothèque renvoie vers sa fiche.</p>
             </div>
           </div>
-          <div class="carte__detail" id="carte-detail" role="status" aria-live="polite">
+          <div class="carte__detail" id="bu-detail" role="status" aria-live="polite">
             <p class="carte__vide">Sélectionnez une bibliothèque dans la liste ou sur la carte pour afficher ses informations.</p>
           </div>
           <noscript>
@@ -2337,7 +2337,26 @@ details.souscarte[open] > summary::after{
     }
 
     function init() {
-      if (pret || typeof L === "undefined") { return; }
+      if (pret) { return; }
+
+      /* Leaflet peut manquer a l'appel : page ouverte hors ligne, requetes vers
+         le CDN bloquees, ou apercu cloisonne. Le cadre resterait alors
+         desesperement gris, sans un mot d'explication, car le message de repli
+         n'etait jusqu'ici revele que par une erreur de tuile, laquelle ne
+         survient jamais si la couche de tuiles n'a pas pu etre creee. On affiche
+         donc ce message et on retire le cadre vide : la liste de selection et le
+         panneau de details, construits independamment de Leaflet, gardent toute
+         leur utilite, chaque lieu y affichant son adresse. On ne fixe pas "pret",
+         de sorte qu'un chargement tardif de Leaflet puisse encore aboutir. */
+      if (typeof L === "undefined") {
+        if (elErreur) { elErreur.hidden = false; }
+        if (elMap) { elMap.hidden = true; }
+        return;
+      }
+
+      /* Leaflet est la : on annule un eventuel repli affiche plus tot. */
+      if (elErreur) { elErreur.hidden = true; }
+      if (elMap) { elMap.hidden = false; }
       pret = true;
 
       carte = L.map(elMap, { scrollWheelZoom: false });
@@ -2586,7 +2605,7 @@ details.souscarte[open] > summary::after{
 
   creerCarte({
     racine: "carte-bu", rubrique: "bibliotheques",
-    liste: "carte-liste", map: "carte-map", detail: "carte-detail", erreur: "carte-erreur",
+    liste: "bu-liste", map: "bu-map", detail: "bu-detail", erreur: "bu-erreur",
     points: BIBLIOTHEQUES,
     vide: "S\u00e9lectionnez une biblioth\u00e8que dans la liste ou sur la carte pour afficher ses informations."
   });
