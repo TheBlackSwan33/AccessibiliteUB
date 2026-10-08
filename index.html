@@ -2366,10 +2366,34 @@ details.souscarte[open] > summary::after{
         maxZoom: 19,
         attribution: '&copy; les contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       });
+      /* Le fond de carte peut manquer alors meme que Leaflet a ete charge :
+         reseau filtrant le serveur de tuiles, apercu cloisonne, coupure. On
+         distinguait mal les deux cas jusqu'ici, et le compteur d'erreurs seul
+         produisait deux travers opposes. Quelques tuiles manquantes en bordure
+         d'une vue par ailleurs complete suffisaient a afficher le message
+         d'echec sur une carte parfaitement lisible. Et quand aucune tuile
+         n'arrivait, le cadre restait affiche : des marqueurs flottant sur du
+         blanc, sous un message disant que la carte n'avait pas pu se charger.
+         On se fie donc desormais au seul critere qui tranche, la reussite d'au
+         moins une tuile. */
+      var chargees = 0;
       var rate = 0;
+      tuiles.on("tileload", function () {
+        chargees++;
+        if (elErreur) { elErreur.hidden = true; }
+        /* Une tuile tardive peut arriver apres que le cadre a ete masque : on le
+           retablit, en recalculant ses dimensions puisque Leaflet les a mesurees
+           a zero pendant qu'il etait cache. */
+        if (elMap && elMap.hidden) {
+          elMap.hidden = false;
+          setTimeout(function () { carte.invalidateSize(); cadrer(false); }, 60);
+        }
+      });
       tuiles.on("tileerror", function () {
         rate++;
-        if (rate > 3 && elErreur) { elErreur.hidden = false; }
+        if (chargees || rate <= 3) { return; }
+        if (elErreur) { elErreur.hidden = false; }
+        if (elMap) { elMap.hidden = true; }
       });
       tuiles.addTo(carte);
 
