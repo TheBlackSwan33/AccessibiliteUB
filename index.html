@@ -467,6 +467,12 @@ ul.documents a:hover .doc-titre{text-decoration:underline;color:var(--cyan-lien)
   margin:1rem 0 .15rem !important;font-size:.6875rem !important;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;color:var(--gris);
 }
+/* Precision secondaire dans un encart de contacts : une condition d'acces, un
+   rappel. Plus discrete que le corps de l'encart, sans etre une etiquette. */
+.fiche__note{
+  margin:.45rem 0 0 !important;font-size:.8125rem !important;line-height:1.5;
+  color:var(--gris);font-style:italic;
+}
 
 
 /* ---------- Visite virtuelle : aperçu illustré ---------- */
@@ -1322,6 +1328,16 @@ details.souscarte[open] > summary::after{
           <p>Il organise aussi les soutenances de thèse.</p>
           <p>Il vous aide à préparer la suite de votre carrière.</p>
           <p>Vous pouvez le rencontrer à Talence.</p>
+          <p>Charlotte Rauscher est conseillère carrière.</p>
+          <p>Elle vous aide à préparer votre travail après la thèse.</p>
+          <p>Vous remplissez un formulaire pour demander un rendez-vous.</p>
+          <p>Elle vous propose une heure le jour même ou le lendemain.</p>
+          <p>Vous choisissez de la voir en vidéo, sur place, ou d’écrire des courriels.</p>
+          <p>Vous choisissez aussi de quoi vous voulez parler.</p>
+          <p>Après le rendez-vous, elle vous envoie un courriel.</p>
+          <p>Ce courriel redit tout ce dont vous avez parlé.</p>
+          <p>Elle connaît bien le handicap au travail.</p>
+          <p>Elle vous explique vos droits.</p>
           <p class="falc-contact">Téléphone : 05 40 00 24 46. Courriel : <a href="mailto:direction.collegeED@u-bordeaux.fr">direction.collegeED@u-bordeaux.fr</a></p>
         </div>
 
@@ -1329,21 +1345,38 @@ details.souscarte[open] > summary::after{
         <div class="rubrique">
           <div class="rubrique__texte">
             <p>Le collège des écoles doctorales a pour missions, entre autres, l’organisation de la formation doctorale, la gestion des inscriptions et des soutenances, la formation doctorale transverse, l’accompagnement à la poursuite de carrière, l’internationalisation, l’animation et la promotion du doctorat.</p>
+            <p>Au sein du collège, le bureau des formations porte un service de conseil de carrière, distinct de l’Espace Orientation Carrières. Charlotte Rauscher, conseillère carrière, y accompagne les doctorants sur trois volets : 1) des entretiens individuels ; 2) des ateliers de valorisation du profil ; 3) des événements carrière. Spécialisée dans la reconversion professionnelle et le handicap, elle est docteure en psychologie sociale.</p>
           </div>
           <div class="fiche">
             <h3>Page web et contacts</h3>
             <p><a href="https://www.u-bordeaux.fr/universite/organisation-et-fonctionnement/composantes-de-formation/college-ecoles-doctorales">Collège des écoles doctorales</a></p>
             <p class="fiche__label">Direction</p>
             <p>05 40 00 24 46<br><a href="mailto:direction.collegeED@u-bordeaux.fr">direction.collegeED@u-bordeaux.fr</a></p>
+            <p class="fiche__label">Conseil de carrière</p>
+            <p>Charlotte Rauscher, conseillère carrière<br>
+            <a href="https://applis.u-bordeaux.fr/sondage/index.php/836386?lang=fr">Formulaire de prise de rendez-vous</a><br>
+            <a href="mailto:carriere.doctorat@u-bordeaux.fr">carriere.doctorat@u-bordeaux.fr</a></p>
+            <p class="fiche__note">Les rendez-vous sont réservés aux doctorants inscrits. Après la soutenance, des ressources peuvent encore être transmises par courriel.</p>
             <p class="fiche__label">Adresse</p>
             <p>351 cours de la Libération, bâtiment A33<br>33400 Talence</p>
           </div>
         </div>
 
         <h3>Mesures d’accessibilité</h3>
-        <p><span class="avalider">À compléter</span></p>
+        <ul class="liste">
+          <li><strong>Entretien au format libre :</strong> le doctorant choisit le thème, et la durée s’ajuste à son rythme, de 25 minutes à 1 h 30 pour une moyenne de 45 minutes. Plutôt que d’allonger un échange, un nouveau créneau peut être planifié.</li>
+          <li><strong>Choix du canal d’échange :</strong> visioconférence, rendez-vous en présentiel ou échange par courriel, selon ce qui convient le mieux, le courriel permettant par exemple de se passer de l’oral.</li>
+          <li><strong>Environnement du rendez-vous adaptable :</strong> l’aménagement physique du lieu d’entretien peut être modifié à la demande.</li>
+          <li><strong>Déroulé annoncé d’emblée :</strong> l’entretien s’ouvre sur la présentation de son propre objectif et de ce qui suit le doctorat, avant d’aborder la situation du doctorant. La rencontre est ainsi prévisible de bout en bout.</li>
+          <li><strong>Récapitulatif écrit :</strong> un courriel reprend ensuite les ressources évoquées pendant l’entretien, ce qui évite d’avoir à tout retenir sur le moment.</li>
+          <li><strong>Réponse sous un jour ouvré :</strong> une demande déposée par le formulaire reçoit une proposition de créneau dans la journée ouvrée, sans attente indéterminée.</li>
+          <li><strong>Ateliers sans prise de parole imposée :</strong> la participation n’est jamais forcée, et elle peut passer par des outils écrits comme Wooclap.</li>
+          <li><strong>Handicap en situation de recrutement :</strong> comment aborder le handicap avec un employeur, demander une adaptation de poste, se présenter aux recrutements de la fonction publique comme du privé, et quels droits ouvre la reconnaissance de la qualité de travailleur handicapé (RQTH).</li>
+          <li><strong>Accompagnement en cas d’arrêt du doctorat :</strong> l’interruption de la thèse fait partie des situations prises en charge par le service.</li>
+        </ul>
 
         <h3>Localisation</h3>
+        <p>Le collège siège au bâtiment A33, sur le campus Peixotto. Les entretiens de conseil de carrière se tiennent en visioconférence ou sur les campus de Peixotto, de la Victoire et de Montesquieu ; le lieu et l’horaire sont communiqués après la prise de rendez-vous.</p>
         <div class="carte" id="carte-ced">
           <div class="carte__zone carte__zone--simple">
             <div>
