@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Bitter:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
 <style>
 /* ==========================================================
    Système graphique du site u-bordeaux.fr (refonte 2021)
@@ -57,11 +59,7 @@ a:hover{color:var(--marron);text-decoration-thickness:.14em;}
 
 :focus-visible{outline:3px solid var(--cyan-lien);outline-offset:3px;border-radius:2px;}
 
-.evitement{
-  position:absolute;left:1rem;top:-6rem;z-index:60;background:var(--marron);
-  color:#fff;padding:.8rem 1.4rem;font-weight:600;text-decoration:none;transition:top .15s;
-}
-.evitement:focus{top:.6rem;color:#fff;}
+
 
 /* ---------- En-tete, sur le modele de u-bordeaux.fr ---------- */
 .entete{border-bottom:1px solid var(--filet);background:var(--blanc);}
@@ -114,8 +112,7 @@ a.outils__item:hover,button.outils__item:hover{background:var(--fond-doux);color
 .outils__icone svg{display:block;width:22px;height:22px;}
 
 /* Panneaux deroules par les icones */
-.panneau{background:var(--fond-doux);border-top:1px solid var(--filet);}
-.panneau__corps{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;padding:1.1rem 0;}
+
 
 /* Reglages repris du widget UniAccess */
 .ua-option{display:flex;align-items:center;gap:.6rem;}
@@ -201,17 +198,7 @@ body.ua-falc p,body.ua-falc li{font-size:1.1em;line-height:1.8;max-width:60ch;}
   padding:1rem 1.25rem;margin:0 !important;
 }
 
-/* Mode nuit */
-body.ua-nuit{
-  --encre:#E8E8E8;--gris:#B8B8B8;--marron:#F1EDEA;--taupe:#9A8F86;
-  --blanc:#1A1A1A;--fond-doux:#2A2A2A;--beige:#333333;--filet:#3D3D3D;
-  --cyan-lien:#5FC8F5;
-  background:#1A1A1A;
-}
-body.ua-nuit .entete,body.ua-nuit .panneau,body.ua-nuit .info-bandeau{background:#1A1A1A;}
-body.ua-nuit .pied{background:#111;}
-body.ua-nuit .carte__map{background:#2A2A2A;}
-body.ua-nuit .avalider{background:#4A3F14;color:#FFF3C4;}
+
 
 @media (max-width:64rem){
   .entete__barre{flex-wrap:wrap;}
@@ -644,116 +631,267 @@ details.souscarte[open] > summary::after{
   a::after{content:" (" attr(href) ")";font-size:.75em;word-break:break-all;}
   .lien-plus::after{content:" →";}
 }
+
+/* ==========================================================
+   KIT ATYPIE-FRIENDLY
+   Ce qui suit vient du kit en-tete / pied de page, puis rattache
+   les variables de la page a celles du kit. Sans ce pont, les
+   reglages de contraste, de couleur et de police du panneau
+   n'atteindraient pas le contenu : ils n'agissent que sur les
+   variables du kit.
+   ========================================================== */
+:root {
+  --fond: #F5F3EE;
+  --surface: #ECEAE3;
+  --texte: #1A1A1A;
+  --doux: #46505A;
+  --titre: #10243F;
+  --bleu: #005AA6;
+  --bord: #C9D4E0;
+  --accent: #F6992F;          
+  --non: #9B1B54; --non-fond: #FBE6EF;
+  --oui: #1E6B2C; --oui-fond: #E2F1E4;
+  --focus: #B35A00;
+  
+  --d-fond: #FFFFFF; --d-texte: #1A1A1A; --d-titre: #10243F; --d-bord: #C9D4E0; --d-doux: #5A6470; --d-accent: #005AA6;
+  --police: 'Open Sans', Verdana, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pas: 8px;
+  color-scheme: light;
+}
+html { scroll-padding-top: 5rem; }
+:root[data-contraste="renforce"] {
+  --fond: #FFFFFF; --surface: #F2F2F2; --texte: #000000; --doux: #000000; --titre: #000000;
+  --bleu: #003A70; --bord: #000000; --non: #7A0F3E; --non-fond: #FBE6EF; --oui: #0F4D1A; --oui-fond: #E2F1E4; --focus: #8A4500;
+}
+:root[data-contraste="inverse"] {
+  --fond: #0F1722; --surface: #172233; --texte: #E8EDF3; --doux: #B3BECB; --titre: #F2F5F9;
+  --bleu: #7DB6EE; --bord: #2E3D52; --non: #F29BBD; --non-fond: #3A1A28; --oui: #8FD39B; --oui-fond: #16301C;
+  --focus: #FFB366; color-scheme: dark;
+}
+.barre {
+  position: sticky; top: 0; z-index: 4; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding: 6px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--fond); border-bottom: 1px solid var(--bord);
+}
+.haut {
+  position: fixed; z-index: 3; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  color: var(--fond); background: var(--bleu); border: 2px solid var(--fond); box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+  font-size: 1.5rem; font-weight: 700; line-height: 1; text-decoration: none;
+}
+.haut:hover { background: var(--titre); }
+.haut[hidden] { display: none; }
+.toc-impression { display: none; }
+.barre-cote { flex: 1 1 0; min-width: max-content; display: flex; }
+.barre-cote--droite { justify-content: flex-end; gap: 8px; }
+.barre .barre-bouton--icone { display: inline-grid; place-items: center; padding: 8px 10px; }
+.panneau.panneau--centre { width: min(30rem, calc(100vw - 32px)); height: fit-content; max-height: 90dvh; margin: auto; border: 1px solid var(--bord); border-radius: 14px 6px 12px 7px; }
+.panneau.panneau--centre .panneau-int { min-height: 0; }
+.panneau--centre .panneau-tete { flex-wrap: nowrap; align-items: flex-start; }
+.panneau--centre .panneau-tete h2 { flex: 1 1 0; min-width: 0; }
+.bouton--lien { display: block; text-align: center; text-decoration: none; }
+.barre-logo { flex: none; display: block; width: 56px; height: 56px; }
+@media (max-width: 440px) {
+  .barre-logo { width: 44px; height: 44px; }
+  .barre .barre-bouton { padding: 6px 10px; font-size: .88rem; }
+  .barre-libelle { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .barre .barre-bouton--icone { padding: 6px 8px; }
+}
+@media (max-width: 350px) {
+  .barre { gap: 4px; }
+  .barre-logo { width: 36px; height: 36px; }
+}
+.barre-bouton span { font-weight: 700; margin-right: 4px; }
+.panneau {
+  width: min(26rem, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: 0; border: 0;
+  color: var(--texte); background: var(--fond); overflow-y: auto; font-family: var(--police);
+}
+.panneau--gauche { margin-right: auto; border-right: 1px solid var(--bord); }
+.panneau--droite { margin-left: auto; border-left: 1px solid var(--bord); }
+.panneau::backdrop { background: rgba(0, 0, 0, .55); }
+.panneau-int { display: grid; gap: calc(var(--pas) * 3); min-height: 100%; align-content: start; padding: calc(var(--pas) * 2.5); }
+.panneau-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.panneau-tete h2 { font-size: 1.4rem; }
+.reglages { display: grid; gap: calc(var(--pas) * 2.5); }
+.reglage { display: grid; gap: 6px; margin: 0; padding: 0 0 calc(var(--pas) * 2); border: 0; border-bottom: 1px solid var(--bord); }
+.reglage legend { padding: 0; margin-bottom: 6px; font-weight: 700; }
+.reglage label { display: flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
+.reglage input[type="radio"] { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--bleu); }
+.reglage input[type="checkbox"] { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--bleu); }
+.reglage-couleur { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.reglage-couleur input { width: 48px; height: 34px; padding: 0; border: 1px solid var(--bord); border-radius: 6px; background: var(--fond); cursor: pointer; }
+.reglage-note { font-size: .9rem; color: var(--doux); }
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  font-family: var(--police); font-size: 1.0625rem; line-height: 1.6;
+  color: var(--texte); background: var(--fond);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { color: var(--titre); line-height: 1.25; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--bleu); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.evitement { position: absolute; left: -9999px; top: 8px; background: var(--fond); color: var(--bleu); padding: 10px 16px; font-weight: 700; border: 2px solid var(--bleu); z-index: 5; }
+.evitement:focus { left: max(16px, env(safe-area-inset-left, 0px)); }
+.page { max-width: 68rem; margin: 0 auto; padding-block: calc(var(--pas) * 6) calc(var(--pas) * 10); }
+.bouton {
+  font: inherit; font-size: .95rem; font-weight: 600; padding: 8px 16px; cursor: pointer;
+  color: var(--bleu); background: var(--fond); border: 2px solid var(--bleu); border-radius: 14px 6px 12px 7px;
+}
+.bouton:hover { background: var(--surface); }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc > ol > li + li { margin-top: calc(var(--pas) * 1.5); }
+.toc a { display: flex; align-items: baseline; gap: 8px; color: var(--texte); text-decoration: none; padding: 3px 0; }
+.toc a:hover .toc-t, .toc a:focus-visible .toc-t { text-decoration: underline; color: var(--bleu); }
+.toc-partie { font-weight: 700; color: var(--titre); }
+.toc-t { min-width: 0; }
+.toc-partie::after { content: none; }
+.toc-partie .toc-t { flex: 0 1 auto; }
+.toc-partie { position: relative; }
+.toc-partie .toc-t::after, .toc li li .toc-t::after { content: ''; }
+.toc li li a { padding-left: 1.8rem; font-size: .98rem; }
+.toc-n { flex: none; min-width: 1.6rem; color: var(--doux); font-variant-numeric: tabular-nums; }
+.toc-precision { flex: 0 1 auto; color: var(--doux); font-size: .85em; }
+.toc-partie .toc-n { color: var(--bleu); }
+.visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.pied-licence { display: block; width: 140px; height: auto; margin-top: 4px; }
+:root[data-contraste="inverse"] .reseaux img { filter: invert(1); }
+.bouton--plein { color: var(--fond); background: var(--bleu); }
+.bouton--plein:hover { background: var(--titre); border-color: var(--titre); }
+.pied-page { margin-top: calc(var(--pas) * 10); padding-top: calc(var(--pas) * 3); border-top: 1px solid var(--bord); color: var(--doux); font-size: .92rem; display: grid; gap: var(--pas); }
+@page { size: A4; margin: 14mm; }
+@media print {
+  :root { --fond: #FFFFFF; --surface: #F2F2F2; }
+  html { font-size: 13px; scroll-padding-top: 0; }
+  body { padding: 0; }
+  .barre, .haut, .evitement, .panneau { display: none !important; }
+  .page { max-width: none; padding: 0; }
+  .toc-impression { display: block; margin-top: calc(var(--pas) * 4); }
+  .toc-impression h2 { font-size: 1.4rem; margin-bottom: calc(var(--pas) * 1.5); }
+  h2, h3, h4 { break-after: avoid; }
+  h2 { break-inside: avoid; }
+}
+
+/* ---------- Pont entre les variables de la page et celles du kit ----------
+   Les noms de gauche sont ceux de la page, herites de la charte
+   u-bordeaux ; ils pointent desormais vers les variables du kit, que le
+   panneau d'accessibilite redefinit. --taupe n'etait defini que par le
+   mode nuit, supprime : sans cette ligne, le credit des photos perdait
+   sa couleur. */
+:root{
+  --blanc:var(--fond);
+  --fond-doux:var(--surface);
+  --beige:var(--surface);
+  --encre:var(--texte);
+  --gris:var(--doux);
+  --taupe:var(--doux);
+  --marron:var(--titre);
+  --cyan:var(--bleu);
+  --cyan-lien:var(--bleu);
+  --filet:var(--bord);
+  --f-titre:var(--police);
+  --f-texte:var(--police);
+}
+
+/* ---------- Raccords de mise en page ----------
+   .page du kit borne deja la largeur et centre le contenu : .conteneur
+   ne doit plus imposer la sienne, sinon les deux se cumulent. */
+.page .conteneur{width:100%;}
+.page{padding-block:calc(var(--pas) * 3) calc(var(--pas) * 6);}
+body{background:var(--fond);color:var(--texte);}
+
+/* Le filtre par public occupait la colonne laterale ; il devient une
+   bande horizontale au-dessus des rubriques. */
+.filtre--barre{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 1.2rem;
+  /* Pas de filet ici : la premiere rubrique porte deja le sien, et les deux
+     se superposaient en un double trait. */
+  margin:2rem 0 1.5rem;padding:0;
+}
+.filtre--barre h2{margin:0;font-size:1rem;}
+.filtre--barre .filtre__etat{margin:0;}
+
+/* Les boutons des visites virtuelles prennent l'apparence du kit. */
+.bouton{border-radius:14px 6px 12px 7px;}
+
+/* La barre du kit est collante : les ancres doivent s'arreter dessous. */
+html{scroll-padding-top:6rem;}
+
+/* ---------- Impression ----------
+   On masque tout ce qui ne vaut qu'a l'ecran : barre, fenetres, bouton
+   de remontee, filtre, et les cartes, qui sont interactives et dont le
+   fond ne s'imprime pas. Les coordonnees restent dans les encarts. */
+@media print{
+  .barre,.haut,.evitement,.panneau,.filtre,.filtre--barre,.carte{display:none !important;}
+  .page{max-width:none;padding:0;}
+  .toc-impression{display:block;}
+  details.section,details.souscarte{break-inside:auto;}
+  .section__corps,.souscarte__corps{padding-bottom:1rem;}
+}
+
 </style>
+<script>
+(function () {
+  var CLE = 'ppt-accessible-affichage', racine = document.documentElement;
+  var POLICES = {
+    arial: "Arial, Helvetica, sans-serif",
+    verdana: "Verdana, Geneva, sans-serif",
+    atkinson: "'Atkinson Hyperlegible', Verdana, sans-serif"
+  };
+  function appliquer(p) {
+    racine.style.fontSize = p.taille && p.taille !== '100' ? p.taille + '%' : '';
+    if (p.contraste && p.contraste !== 'normal') racine.setAttribute('data-contraste', p.contraste);
+    else racine.removeAttribute('data-contraste');
+    ['--texte', '--doux', '--titre'].forEach(function (v) {
+      if (p.couleur) racine.style.setProperty(v, p.couleur); else racine.style.removeProperty(v);
+    });
+    if (POLICES[p.police]) racine.style.setProperty('--police', POLICES[p.police]);
+    else racine.style.removeProperty('--police');
+  }
+  function lire() {
+    try { return JSON.parse(localStorage.getItem(CLE)) || {}; } catch (e) { return {}; }
+  }
+  function ecrire(p) {
+    try { localStorage.setItem(CLE, JSON.stringify(p)); } catch (e) {}
+  }
+  appliquer(lire());
+  window.affichagePage = { appliquer: appliquer, lire: lire, ecrire: ecrire };
+})();
+</script>
 </head>
 <body>
 
-<a class="evitement" href="#contenu">Aller au contenu principal</a>
-
-<!-- ---------------- barre utilitaire ---------------- -->
-<!-- ---------------- en-tête ----------------
-     Une seule barre, sur le modèle de u-bordeaux.fr : logo, navigation,
-     puis les outils séparés par des filets verticaux. Les réglages de
-     lecture sont regroupés derrière l'icône d'accessibilité, comme sur
-     le site. Le bloc typographique tenant lieu de logo doit être
-     remplacé par le fichier officiel. -->
-<header class="entete">
-  <div class="conteneur entete__barre">
-    <a class="logo" href="https://www.u-bordeaux.fr">
-      <span class="logo__l1">univers<span class="logo__accent">i</span>té</span>
-      <span class="logo__l2"><span class="logo__de">de</span>BORDEAUX</span>
-    </a>
-
-    <nav class="nav-principale" aria-label="Navigation principale">
-      <ul>
-        <li><a href="https://www.u-bordeaux.fr/formation">Formation</a></li>
-        <li><a href="https://www.u-bordeaux.fr/recherche">Recherche</a></li>
-        <li><a href="https://www.u-bordeaux.fr/innovation">Innovation</a></li>
-        <li><a href="https://www.u-bordeaux.fr/campus">Campus</a></li>
-        <li><a href="https://www.u-bordeaux.fr/International">International</a></li>
-        <li><a href="https://www.u-bordeaux.fr/universite" aria-current="true">Université</a></li>
-      </ul>
-    </nav>
-
-    <div class="outils">
-      <a class="outils__item" href="https://intranet.u-bordeaux.fr">Intranet</a>
-
-      <button type="button" class="outils__item outils__icone" id="btn-acces"
-              aria-expanded="false" aria-controls="panneau-acces">
-        <svg class="uniaccess-icone" viewBox="0 0 1024 1024" width="26" height="26" aria-hidden="true" focusable="false">
-          <circle cx="512" cy="512" r="360" stroke="currentColor" stroke-width="42" fill="none"/>
-          <circle cx="512" cy="340" r="50" fill="currentColor"/>
-          <path d="M312 505 C390 475, 445 455, 512 455 C579 455, 634 475, 712 505" stroke="currentColor" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M512 455 C505 520, 505 585, 512 645" stroke="currentColor" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M480 620 L392 774" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <path d="M544 620 L632 774" stroke="currentColor" stroke-width="56" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <span class="cache">Options d’accessibilité</span>
-      </button>
-
-      <span class="outils__item outils__langue"><span lang="fr">FR</span></span>
-
-    </div>
-  </div>
-
-  <!-- réglages de lecture, dépliés par l'icône ci-dessus -->
-  <div class="panneau" id="panneau-acces" hidden>
-    <div class="conteneur panneau__corps">
-
-      <div class="ua-option">
-        <span class="ua-label" id="lab-taille">Taille police</span>
-        <div class="ua-pas" role="group" aria-labelledby="lab-taille">
-          <button type="button" id="ua-taille-moins" title="Réduire">−</button>
-          <span class="ua-valeur" id="ua-taille-valeur" role="status">100&nbsp;%</span>
-          <button type="button" id="ua-taille-plus" title="Augmenter">+</button>
-        </div>
-      </div>
-
-      <div class="ua-option">
-        <label class="ua-label" for="ua-police">Police</label>
-        <select id="ua-police" class="ua-select">
-          <option value="default">Défaut</option>
-          <option value="dyslexia">Dyslexie-friendly</option>
-          <option value="sans-serif">Sans-serif</option>
-          <option value="serif">Serif</option>
-        </select>
-      </div>
-
-      <div class="ua-option">
-        <span class="ua-label" id="lab-inter">Espacement des lignes</span>
-        <div class="ua-pas" role="group" aria-labelledby="lab-inter">
-          <button type="button" id="ua-inter-moins" title="Réduire">−</button>
-          <span class="ua-valeur" id="ua-inter-valeur" role="status">Normal</span>
-          <button type="button" id="ua-inter-plus" title="Augmenter">+</button>
-        </div>
-      </div>
-
-      <label class="ua-case"><input type="checkbox" id="ua-nuit"> <span>Mode nuit</span></label>
-      <label class="ua-case"><input type="checkbox" id="ua-falc"> <span>FALC (Facile À Lire et Comprendre)</span></label>
-      <label class="ua-case"><input type="checkbox" id="ua-regle"> <span>Règle de lecture</span></label>
-
-      <button type="button" class="ua-raz" id="ua-raz">Réinitialiser</button>
-    </div>
-  </div>
-
-  <div id="ua-ruban" class="ua-ruban" aria-hidden="true"></div>
-
-</header>
-
-<div class="info-bandeau">
-  <div class="conteneur">
-    <p><strong>Version de travail.</strong> Cette page n’est pas publiée&nbsp;: elle sert de support aux échanges avec les services avant validation des contenus et des contacts.</p>
-  </div>
+<a class="evitement" href="#contenu-page">Aller au contenu</a>
+<div class="barre">
+  <div class="barre-cote"><button type="button" class="bouton barre-bouton" id="ouvrir-sommaire" aria-haspopup="dialog"><span aria-hidden="true">☰</span> Sommaire</button></div>
+  <img class="barre-logo" src="https://theblackswan33.github.io/accessibilite-presentation-PPT/logo-atypie-friendly.png" alt="Atypie-Friendly, Université de Bordeaux" width="56" height="56">
+  <div class="barre-cote barre-cote--droite"><button type="button" class="bouton barre-bouton barre-bouton--icone" id="ouvrir-telechargement" aria-haspopup="dialog" aria-label="Télécharger la page en PDF" title="Télécharger la page en PDF"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12M7 10.5 12 15.5l5-5M4 20.5h16"/></svg></button><button type="button" class="bouton barre-bouton" id="ouvrir-accessibilite" aria-haspopup="dialog"><span aria-hidden="true">Aa</span> <span class="barre-libelle">Accessibilité</span></button></div>
 </div>
+<dialog class="panneau panneau--gauche" id="panneau-sommaire" aria-labelledby="toc-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="toc-titre">Sommaire</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <nav class="toc" aria-labelledby="toc-titre"></nav>
+</div></dialog>
+<dialog class="panneau panneau--centre" id="panneau-telechargement" aria-labelledby="dl-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="dl-titre">Ce contenu vous a plus ? Conservez-le !</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <p>Téléchargez le contenu entier de la page au format PDF.</p>
+  <a class="bouton bouton--plein bouton--lien" id="lien-pdf" href="dispositifs-accessibilite-universite-de-bordeaux.pdf" download>Télécharger en PDF</a>
+</div></dialog>
+<dialog class="panneau panneau--droite" id="panneau-accessibilite" aria-labelledby="pa-titre"><div class="panneau-int">
+  <div class="panneau-tete"><h2 id="pa-titre">Accessibilité</h2><button type="button" class="bouton panneau-fermer">Fermer</button></div>
+  <form class="reglages" id="reglages">
+    <fieldset class="reglage"><legend>Taille du texte</legend><label><input type="radio" name="pa-taille" value="100" checked> Normale</label><label><input type="radio" name="pa-taille" value="125"> Grande</label><label><input type="radio" name="pa-taille" value="150"> Très grande</label><label><input type="radio" name="pa-taille" value="200"> Maximale</label></fieldset>
+    <fieldset class="reglage"><legend>Contraste</legend><label><input type="radio" name="pa-contraste" value="normal" checked> Normal</label><label><input type="radio" name="pa-contraste" value="renforce"> Renforcé (noir sur blanc)</label><label><input type="radio" name="pa-contraste" value="inverse"> Inversé (clair sur foncé)</label></fieldset>
+    <fieldset class="reglage"><legend>Couleur du texte</legend><div class="reglage-couleur"><label>Choisir une couleur <input type="color" id="pa-couleur" value="#1a1a1a"></label><button type="button" class="bouton" id="pa-couleur-origine">Couleur d’origine</button></div><p class="reglage-note" id="pa-couleur-note" aria-live="polite"></p></fieldset>
+    <fieldset class="reglage"><legend>Police</legend><label><input type="radio" name="pa-police" value="defaut" checked> Open Sans (par défaut)</label><label><input type="radio" name="pa-police" value="arial"> Arial</label><label><input type="radio" name="pa-police" value="verdana"> Verdana</label><label><input type="radio" name="pa-police" value="atkinson"> Atkinson Hyperlegible</label></fieldset>
+    <fieldset class="reglage"><legend>Langage simple</legend><label><input type="checkbox" id="pa-falc"> FALC (facile à lire et à comprendre)</label><p class="reglage-note">Remplace le texte des rubriques par une version en phrases courtes.</p></fieldset>
+    <button type="button" class="bouton" id="pa-reinitialiser">Réinitialiser</button>
+    <p class="reglage-note">Vos réglages sont conservés sur cet appareil. Les diapositives d’exemple gardent leur apparence, sauf leur taille.</p>
+  </form>
+</div></dialog>
+<!-- KIT FIN : barre du haut et fenêtres -->
+<main class="page" id="contenu-page">
 
-<nav class="fil conteneur" aria-label="Fil d’Ariane">
-  <ol>
-    <li><a href="https://www.u-bordeaux.fr/">Accueil</a></li>
-    <li><a href="https://www.u-bordeaux.fr/universite">Université</a></li>
-    <li><a href="https://www.u-bordeaux.fr/universite/nos-engagements">Nos engagements</a></li>
-    <li><span aria-current="page">Dispositifs facilitant l’accessibilité à l’Université</span></li>
-  </ol>
-</nav>
 
 <div class="conteneur">
   <div class="intro">
@@ -782,47 +920,23 @@ details.souscarte[open] > summary::after{
 </div>
 
 <div class="conteneur">
-<div class="grille">
 
-  <!-- ---------------- colonne latérale ---------------- -->
-  <aside>
-    <div class="filtre">
-      <h2 id="t-filtre">Filtrer par public</h2>
-      <div class="filtre__boutons" role="group" aria-labelledby="t-filtre">
-        <button type="button" data-public="tout" aria-pressed="true">Tout</button>
-        <button type="button" data-public="etudiants" aria-pressed="false">Étudiants</button>
-        <button type="button" data-public="personnels" aria-pressed="false">Personnels</button>
-      </div>
-      <p class="filtre__etat" id="filtre-etat" role="status">15 rubriques affichées.</p>
-    </div>
+  <!-- Filtre par public : il n’etait pas dans le kit. Il vivait dans la colonne
+       laterale, supprimee avec le sommaire ; il passe donc au-dessus des rubriques. -->
+  <div class="filtre filtre--barre">
+    <h2 id="t-filtre">Filtrer par public</h2>
+    <div class="filtre__boutons" role="group" aria-labelledby="t-filtre">
+      <button type="button" data-public="tout" aria-pressed="true">Tout</button>
+      <button type="button" data-public="etudiants" aria-pressed="false">Étudiants</button>
+      <button type="button" data-public="personnels" aria-pressed="false">Personnels</button>
+  </div>
+    <p class="filtre__etat" id="filtre-etat" role="status">15 rubriques affichées.</p>
+  </div>
 
-    <nav class="sommaire" aria-labelledby="t-sommaire">
-      <h2 id="t-sommaire">Sommaire</h2>
-      <ol id="liste-sommaire">
-        <li><a href="#personnels">Accompagnement des personnels</a></li>
-        <li><a href="#phase">Service PHASE</a></li>
-        <li><a href="#ese">Espace santé étudiants</a></li>
-        <li><a href="#bve">Bureaux de la vie étudiante</a></li>
-        <li><a href="#pedagogie">MAPI <span class="sommaire__precision">(Pédagogie &amp; Innovation)</span></a></li>
-        <li><a href="#maoip">Espace Orientation Carrières <span class="sommaire__precision">(MAOIP)</span></a></li>
-        <li><a href="#ecoles-doctorales">Collège des écoles doctorales <span class="sommaire__precision">(Conseils de carrière doctorat)</span></a></li>
-        <li class="sommaire__fille"><a href="#ced-carriere" data-parent="ecoles-doctorales">Conseil de carrière</a></li>
-        <li><a href="#bibliotheques">Bibliothèques universitaires</a></li>
-        <li><a href="#feel-et-mouv">Feel &amp; Mouv’</a></li>
-        <li><a href="#associations">Associations étudiantes</a></li>
-        <li><a href="#accessibilite-numerique">Accessibilité numérique</a></li>
-        <li><a href="#formations">Formations au handicap et à l’accessibilité</a></li>
-        <li><a href="#atypie-friendly">Atypie-Friendly</a></li>
-        <li><a href="#partenaires">Partenaires</a></li>
-        <li class="sommaire__fille"><a href="#partenaire-crous" data-parent="partenaires">CROUS</a></li>
-        <li class="sommaire__fille"><a href="#partenaire-cra" data-parent="partenaires">Centre Ressource Autisme</a></li>
-        <li><a href="#documents">Documents</a></li>
-      </ol>
-    </nav>
-  </aside>
+  <!-- Sommaire du PDF, invisible a l’ecran. -->
+  <div class="toc toc-impression" id="toc-impression"><h2>Sommaire</h2></div>
 
-  <!-- ---------------- contenu ---------------- -->
-  <main id="contenu">
+  <div class="rubriques" id="contenu">
 
     <!-- 1 -->
     <details class="section" id="personnels" data-public="personnels">
@@ -1170,7 +1284,7 @@ details.souscarte[open] > summary::after{
 
     <details class="section" id="pedagogie" data-public="etudiants personnels">
       <summary>
-        <h2 id="h-map">MAPI<span class="source">Mission d’appui à la pédagogie et à l’innovation</span></h2>
+        <h2 id="h-map" data-sommaire="Pédagogie &amp; innovation">MAPI<span class="source">Mission d’appui à la pédagogie et à l’innovation</span></h2>
       </summary>
       <div class="section__corps">
 
@@ -1239,7 +1353,7 @@ details.souscarte[open] > summary::after{
 
     <details class="section" id="maoip" data-public="etudiants">
       <summary>
-        <h2 id="h-maoip">Espace Orientation Carrières<span class="source">Mission d’appui à l’orientation et à l’insertion professionnelle (MAOIP)</span></h2>
+        <h2 id="h-maoip" data-sommaire="MAOIP">Espace Orientation Carrières<span class="source">Mission d’appui à l’orientation et à l’insertion professionnelle (MAOIP)</span></h2>
       </summary>
       <div class="section__corps">
 
@@ -1317,7 +1431,7 @@ details.souscarte[open] > summary::after{
 
     <details class="section" id="ecoles-doctorales" data-public="etudiants">
       <summary>
-        <h2 id="h-ced">Collège des écoles doctorales<span class="source">Formation doctorale, conseil de carrière</span></h2>
+        <h2 id="h-ced" data-sommaire="Conseils de carrière doctorat">Collège des écoles doctorales<span class="source">Formation doctorale, conseil de carrière</span></h2>
       </summary>
       <div class="section__corps">
 
@@ -2012,134 +2126,52 @@ details.souscarte[open] > summary::after{
 
     </details>
 
-  </main>
-</div>
-</div>
-
-<!-- ---------------- pied ---------------- -->
-<footer class="pied">
-  <div class="conteneur">
-    <div class="pied__identite">
-      <p class="logo">
-        <span class="logo__l1">univers<span class="logo__accent">i</span>té</span>
-        <span class="logo__l2"><span class="logo__de">de</span>BORDEAUX</span>
-      </p>
-      <p class="pied__adresse">351 cours de la Libération CS10004<br>33405 Talence CEDEX</p>
-      <p class="pied__tel">Tél&nbsp;: +33 (0)5 40 00 60 00</p>
-      <p class="pied__contacts"><a href="https://www.u-bordeaux.fr/contacts">Contacts</a></p>
-    </div>
-
-    <div class="legales">
-      <p class="legales__cookies"><button type="button" class="legales__bouton">Gestion des cookies</button></p>
-      <ul>
-        <li><a href="https://www.u-bordeaux.fr/mentions-legales">Mentions légales</a></li>
-        <li><a href="https://www.u-bordeaux.fr/conditions-generales-dutilisation">CGU</a></li>
-        <li><a href="https://www.u-bordeaux.fr/accessibilite">Accessibilité&nbsp;: partiellement conforme</a></li>
-        <li><a href="https://www.u-bordeaux.fr/donnees-personnelles">Données personnelles</a></li>
-        <li><a href="https://www.u-bordeaux.fr/plan-du-site">Plan du site</a></li>
-        <li><a href="https://www.u-bordeaux.fr/annuaire">Annuaire</a></li>
-        <li><a href="https://www.u-bordeaux.fr/urgence">Urgence</a></li>
-      </ul>
-    </div>
   </div>
-</footer>
+</div>
+
+  <footer class="pied-page">
+    <p>Page réalisée par Florian LARONZE et Bernard N'KAOUA de l'équipe Atypie-Friendly de l'Université de Bordeaux.</p>
+    <p>Aucune donnée n’est conservée en ligne. Vos réglages d’affichage restent uniquement dans ce navigateur, sur cet appareil. Les fonds de carte sont chargés depuis les serveurs d’OpenStreetMap, qui reçoivent de ce fait votre adresse IP.</p>
+    <img class="pied-licence" src="https://theblackswan33.github.io/accessibilite-presentation-PPT/cc-by-nc-sa.png" alt="Licence Creative Commons BY-NC-SA" width="140" height="47">
+  </footer>
+</main>
+
+<a class="haut" id="haut-page" href="#top" aria-label="Revenir en haut de la page" title="Revenir en haut de la page"><span aria-hidden="true">↑</span></a>
 
 <script>
 (function () {
   "use strict";
   var racine = document.documentElement;
 
-  /* -------- reglages d'accessibilite, repris du widget UniAccess --------
-     Memes fonctions et memes valeurs : taille de 70 a 150 % par pas de 10,
-     interligne de 1,2 a 2,4 par pas de 0,2, choix de police, mode nuit,
-     FALC et regle de lecture. La persistance passe par localStorage sur
-     UniAccess ; elle est ici en memoire, a rebrancher a la mise en ligne. */
-  var TAILLE_DEFAUT = 100, INTER_DEFAUT = 1.6;
-  var taille = TAILLE_DEFAUT, inter = INTER_DEFAUT;
-
-  function appliquerTaille() {
-    racine.style.fontSize = (16 * taille / 100) + "px";
-    var v = document.getElementById("ua-taille-valeur");
-    if (v) { v.textContent = taille + "\u00a0%"; }
+  /* -------- mode FALC --------
+     Le widget UniAccess qui portait ce reglage a ete remplace par le
+     panneau du kit. Taille, police et contraste y sont desormais traites ;
+     le FALC, lui, n'existe que sur cette page, puisqu'il bascule vers une
+     redaction en langage simple ecrite rubrique par rubrique. Il est donc
+     ajoute au panneau du kit plutot que perdu avec le widget. */
+  var CLE_FALC = 'accessibilite-ub-falc';
+  function appliquerFalc(actif) {
+    document.body.classList.toggle('ua-falc', actif);
+    try { localStorage.setItem(CLE_FALC, actif ? '1' : '0'); } catch (e) {}
   }
-  function appliquerInter() {
-    document.body.style.lineHeight = inter;
-    var v = document.getElementById("ua-inter-valeur");
-    if (v) {
-      v.textContent = inter === 1.6 ? "Normal" : (inter < 1.6 ? "R\u00e9duit" : "Augment\u00e9");
-    }
+  var caseFalc = document.getElementById('pa-falc');
+  if (caseFalc) {
+    var memorise = '0';
+    try { memorise = localStorage.getItem(CLE_FALC) || '0'; } catch (e) {}
+    caseFalc.checked = memorise === '1';
+    appliquerFalc(caseFalc.checked);
+    caseFalc.addEventListener('change', function () { appliquerFalc(caseFalc.checked); });
   }
-  function changerPolice(police) {
-    document.body.classList.remove("ua-police-dyslexia", "ua-police-sans-serif", "ua-police-serif");
-    if (police !== "default") { document.body.classList.add("ua-police-" + police); }
-  }
-
-  function surClic(id, action) {
-    var b = document.getElementById(id);
-    if (b) { b.addEventListener("click", action); }
-  }
-  surClic("ua-taille-plus", function () {
-    taille = Math.min(taille + 10, 150); appliquerTaille();
-  });
-  surClic("ua-taille-moins", function () {
-    taille = Math.max(taille - 10, 70); appliquerTaille();
-  });
-  surClic("ua-inter-plus", function () {
-    inter = Math.round(Math.min(inter + 0.2, 2.4) * 10) / 10; appliquerInter();
-  });
-  surClic("ua-inter-moins", function () {
-    inter = Math.round(Math.max(inter - 0.2, 1.2) * 10) / 10; appliquerInter();
-  });
-
-  var selPolice = document.getElementById("ua-police");
-  if (selPolice) {
-    selPolice.addEventListener("change", function () { changerPolice(selPolice.value); });
-  }
-
-  function caseAcocher(id, action) {
-    var c = document.getElementById(id);
-    if (c) { c.addEventListener("change", function () { action(c.checked); }); }
-  }
-  caseAcocher("ua-nuit", function (on) {
-    document.body.classList.toggle("ua-nuit", on);
-  });
-  caseAcocher("ua-falc", function (on) {
-    document.body.classList.toggle("ua-falc", on);
-  });
-
-  var ruban = document.getElementById("ua-ruban");
-  function suivrePointeur(e) { if (ruban) { ruban.style.top = e.clientY + "px"; } }
-  caseAcocher("ua-regle", function (on) {
-    if (!ruban) { return; }
-    ruban.classList.toggle("actif", on);
-    if (on) { document.addEventListener("mousemove", suivrePointeur); }
-    else { document.removeEventListener("mousemove", suivrePointeur); }
-  });
-
-  surClic("ua-raz", function () {
-    taille = TAILLE_DEFAUT; appliquerTaille();
-    inter = INTER_DEFAUT; appliquerInter();
-    changerPolice("default");
-    if (selPolice) { selPolice.value = "default"; }
-    document.body.classList.remove("ua-nuit", "ua-falc");
-    if (ruban) {
-      ruban.classList.remove("actif");
-      document.removeEventListener("mousemove", suivrePointeur);
-    }
-    Array.prototype.forEach.call(
-      document.querySelectorAll("#panneau-acces input[type='checkbox']"),
-      function (c) { c.checked = false; }
-    );
-  });
-
-  appliquerTaille();
-  appliquerInter();
 
   /* -------- filtre par public -------- */
   var sections = document.querySelectorAll(".section[data-public]");
   var boutonsFiltre = document.querySelectorAll(".filtre__boutons button");
   var etat = document.getElementById("filtre-etat");
-  var liensSommaire = document.querySelectorAll("#liste-sommaire a");
+  /* Le sommaire du kit est construit apres ce script : on le relit a chaque
+     filtrage plutot que de le capturer une fois pour toutes. */
+  function liensDuSommaire() {
+    return document.querySelectorAll("#panneau-sommaire nav a[data-rubrique], #toc-impression a[data-rubrique]");
+  }
 
   var publicCourant = "tout";
 
@@ -2154,10 +2186,9 @@ details.souscarte[open] > summary::after{
       s.hidden = !ok;
       if (ok) { visibles.push(s.id); }
     });
-    Array.prototype.forEach.call(liensSommaire, function (a) {
-      /* une entree fille du sommaire suit le sort de sa rubrique parente */
-      var cible = a.dataset.parent || a.getAttribute("href").slice(1);
-      a.parentNode.hidden = visibles.indexOf(cible) === -1;
+    Array.prototype.forEach.call(liensDuSommaire(), function (a) {
+      /* une entree de sous-rubrique suit le sort de sa rubrique parente */
+      a.parentNode.hidden = visibles.indexOf(a.getAttribute("data-rubrique")) === -1;
     });
     if (etat) {
       etat.textContent = visibles.length <= 1
@@ -2174,6 +2205,10 @@ details.souscarte[open] > summary::after{
       filtrer(b.dataset.public);
     });
   });
+
+  /* Le sommaire du kit est bati plus tard : il rappelle cette fonction pour
+     se mettre d’accord avec le filtre en cours. */
+  window.accordeSommaireEtFiltre = function () { filtrer(publicCourant); };
 
   /* Une ancre doit ouvrir la rubrique visée, sinon le lien ne mène nulle part. */
   function ouvrirCible(id) {
@@ -2217,28 +2252,6 @@ details.souscarte[open] > summary::after{
     etatAvantImpression = null;
   });
 
-  /* -------- panneaux de l'en-tete (accessibilite, recherche) -------- */
-  function panneau(idBouton, idPanneau, apres) {
-    var b = document.getElementById(idBouton);
-    var pan = document.getElementById(idPanneau);
-    if (!b || !pan) { return; }
-    b.addEventListener("click", function () {
-      var ouvert = b.getAttribute("aria-expanded") === "true";
-      /* un seul panneau ouvert a la fois */
-      Array.prototype.forEach.call(document.querySelectorAll(".outils__item[aria-expanded]"), function (x) {
-        x.setAttribute("aria-expanded", "false");
-        var c = document.getElementById(x.getAttribute("aria-controls"));
-        if (c) { c.hidden = true; }
-      });
-      if (!ouvert) {
-        b.setAttribute("aria-expanded", "true");
-        pan.hidden = false;
-        if (apres) { apres(); }
-      }
-    });
-  }
-  panneau("btn-acces", "panneau-acces");
-
   /* -------- sommaire : rubrique courante -------- */  if ("IntersectionObserver" in window) {
     var courant = null;
     var obs = new IntersectionObserver(function (entrees) {
@@ -2246,8 +2259,11 @@ details.souscarte[open] > summary::after{
         if (!e.isIntersecting) { return; }
         if (courant === e.target.id) { return; }
         courant = e.target.id;
-        Array.prototype.forEach.call(liensSommaire, function (a) {
-          if (a.getAttribute("href") === "#" + courant) { a.setAttribute("aria-current", "true"); }
+        /* Le reperage se fait maintenant sur les entrees du menu « Sommaire »,
+           reliees a leur rubrique par data-rubrique : le lecteur qui ouvre le
+           menu voit ou il en est. */
+        Array.prototype.forEach.call(liensDuSommaire(), function (a) {
+          if (a.getAttribute("data-rubrique") === courant) { a.setAttribute("aria-current", "true"); }
           else { a.removeAttribute("aria-current"); }
         });
       });
@@ -3026,6 +3042,123 @@ details.souscarte[open] > summary::after{
     vide: "S\u00e9lectionnez un coll\u00e8ge dans la liste ou sur la carte pour afficher le contact et l\u2019adresse."
   });
 }());
+</script>
+<script>
+(function () {
+  var A = window.affichagePage, racine = document.documentElement;
+  var haut = document.getElementById('haut-page');
+  function majHaut() { haut.hidden = window.scrollY < 400; }
+  window.addEventListener('scroll', majHaut, { passive: true });
+  majHaut();
+  var prefs = A.lire();
+  var couleur = document.getElementById('pa-couleur'), note = document.getElementById('pa-couleur-note');
+  var form = document.getElementById('reglages');
+  function ouvrir(idBouton, idPanneau) {
+    var panneau = document.getElementById(idPanneau);
+    document.getElementById(idBouton).addEventListener('click', function () { panneau.showModal(); });
+    panneau.addEventListener('click', function (e) {
+      if (e.target === panneau || e.target.classList.contains('panneau-fermer')) panneau.close();
+    });
+  }
+  /* Sommaire construit a partir des titres de la page ; il est repris dans le PDF.
+     Le kit prend tous les h2 et h3 de main. Ici, chaque rubrique repete en h3
+     « Page web et contacts », « Mesures d'accessibilite » et « Localisation » :
+     les reprendre donnerait une cinquantaine d'entrees illisibles, et la moitie
+     porterait le meme libelle. On retient donc les titres de rubrique (h2 des
+     summary) et ceux des sous-rubriques depliables (h3 des summary), qui sont
+     les seules divisions de meme rang. Le h2 « Filtrer par public », qui n'est
+     pas une rubrique, reste dehors. */
+  (function () {
+    var racineToc = document.createElement('ol'), courant = null;
+    var titres = document.querySelectorAll(
+      'main details.section > summary h2, main details.souscarte > summary h3');
+    Array.prototype.forEach.call(titres, function (h) {
+      var rubrique = h.closest('details.section');
+      var li = document.createElement('li'), lien = document.createElement('a'), t = document.createElement('span');
+      lien.href = '#' + h.id;
+      if (rubrique) { lien.setAttribute('data-rubrique', rubrique.id); }
+      /* Le titre d'une rubrique porte son sous-titre dans un <span class="source">.
+         Pris tel quel, h.textContent collait les deux bout a bout. On ne garde
+         que le titre, et la precision eventuelle passe dans un second span. */
+      var etiquette = h.cloneNode(true);
+      var source = etiquette.querySelector('.source');
+      if (source) { source.parentNode.removeChild(source); }
+      t.className = 'toc-t'; t.textContent = etiquette.textContent.trim();
+      lien.appendChild(t);
+      var precision = h.getAttribute('data-sommaire');
+      if (precision) {
+        var p = document.createElement('span');
+        p.className = 'toc-precision'; p.textContent = precision;
+        lien.appendChild(p);
+      }
+      li.appendChild(lien);
+      if (h.tagName === 'H2' || !courant) {
+        lien.className = 'toc-partie'; racineToc.appendChild(li); courant = li;
+      } else {
+        var sous = courant.querySelector('ol');
+        if (!sous) { sous = document.createElement('ol'); courant.appendChild(sous); }
+        sous.appendChild(li);
+      }
+    });
+    document.querySelector('#panneau-sommaire nav').appendChild(racineToc);
+    document.getElementById('toc-impression').appendChild(racineToc.cloneNode(true));
+    /* Le filtre par public masque des rubriques : il doit masquer leurs
+       entrees de sommaire aussi, sans quoi le menu propose des liens vers
+       des rubriques invisibles. */
+    if (window.accordeSommaireEtFiltre) { window.accordeSommaireEtFiltre(); }
+  })();
+  ouvrir('ouvrir-sommaire', 'panneau-sommaire');
+  ouvrir('ouvrir-accessibilite', 'panneau-accessibilite');
+  ouvrir('ouvrir-telechargement', 'panneau-telechargement');
+  document.getElementById('lien-pdf').addEventListener('click', function () { document.getElementById('panneau-telechargement').close(); });
+  var repliees = [];
+  window.addEventListener('beforeprint', function () {
+    repliees = Array.prototype.filter.call(document.querySelectorAll('details'), function (d) { return !d.open; });
+    repliees.forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener('afterprint', function () { repliees.forEach(function (d) { d.open = false; }); });
+  document.querySelectorAll('#panneau-sommaire nav a').forEach(function (a) {
+    a.addEventListener('click', function () { document.getElementById('panneau-sommaire').close(); });
+  });
+  function lum(hex) {
+    var c = [1, 3, 5].map(function (i) {
+      var v = parseInt(hex.substr(i, 2), 16) / 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function couleurActuelle() {
+    return getComputedStyle(racine).getPropertyValue('--texte').trim().toLowerCase();
+  }
+  function majNote() {
+    var hex = couleurActuelle();
+    couleur.value = hex;
+    var a = lum(hex), b = lum(getComputedStyle(racine).getPropertyValue('--fond').trim());
+    var ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    note.textContent = 'Contraste avec le fond ' + ratio.toFixed(2).replace('.', ',') + ':1, ' +
+      (ratio >= 4.5 ? 'suffisant.' : 'insuffisant. Choisissez une autre couleur.');
+  }
+  function cocher() {
+    [['pa-taille', prefs.taille || '100'], ['pa-contraste', prefs.contraste || 'normal'], ['pa-police', prefs.police || 'defaut']].forEach(function (x) {
+      var el = form.querySelector('input[name="' + x[0] + '"][value="' + x[1] + '"]');
+      if (el) el.checked = true;
+    });
+  }
+  function maj() { A.appliquer(prefs); A.ecrire(prefs); majNote(); }
+  form.addEventListener('change', function (e) {
+    var cle = { 'pa-taille': 'taille', 'pa-contraste': 'contraste', 'pa-police': 'police' }[e.target.name];
+    if (cle) { prefs[cle] = e.target.value; maj(); }
+  });
+  couleur.addEventListener('input', function () { prefs.couleur = couleur.value; maj(); });
+  document.getElementById('pa-couleur-origine').addEventListener('click', function () { delete prefs.couleur; maj(); });
+  document.getElementById('pa-reinitialiser').addEventListener('click', function () {
+    prefs = {}; cocher(); maj();
+    /* Le FALC est gere par le script de la page : on le relache aussi. */
+    var f = document.getElementById('pa-falc');
+    if (f && f.checked) { f.checked = false; f.dispatchEvent(new Event('change')); }
+  });
+  cocher(); majNote();
+})();
 </script>
 </body>
 </html>
