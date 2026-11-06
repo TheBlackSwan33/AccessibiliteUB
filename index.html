@@ -818,6 +818,22 @@ body{background:var(--fond);color:var(--texte);}
 /* La barre du kit est collante : les ancres doivent s'arreter dessous. */
 html{scroll-padding-top:6rem;}
 
+/* ---------- L'encart de contacts flotte ----------
+   L'encart occupait la seconde colonne d'une grille a deux colonnes. La
+   hauteur de la ligne etant celle du plus grand des deux, un encart fourni
+   face a une description courte laissait un grand vide, et « Dispositifs
+   proposes » ne commencait qu'au-dessous. En flottant, l'encart laisse la
+   description puis les dispositifs se poursuivre a sa gauche, et le vide
+   disparait. En dessous de 52 rem la mise en page reste sur une colonne. */
+@media (min-width:52rem){
+  .rubrique{display:block;margin-bottom:1.5rem;}
+  .rubrique > .fiche{float:right;width:18rem;margin:0 0 1.5rem 2.75rem;}
+}
+/* Ce qui demande la pleine largeur passe sous l'encart plutot qu'a cote. */
+.carte,.vv-grille,details.souscarte,.clair{clear:both;}
+/* Les flottants restent enfermes dans leur rubrique. */
+.section__corps,.souscarte__corps{display:flow-root;}
+
 /* ---------- Sommaire ----------
    Le kit pose un sommaire a plat. Avec quinze rubriques dont certaines ont un
    titre long et une precision, il devenait difficile a parcourir : on ajoute
@@ -1123,7 +1139,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Aménagements d’examens</summary><div class="dispo__detail"><p>Temps majoré, assistance d’un secrétaire d’épreuve, sujets en format adapté ; sessions différées pour les sportifs de haut et très bon niveau.</p></div></details></li>
         </ul>
 
-        <h3>Visite virtuelle</h3>
+        <h3 class="clair">Visite virtuelle</h3>
         <div class="vv-grille">
           <div class="vv-grille__texte">
             <p>Se présenter dans un lieu inconnu est souvent le point le plus coûteux de la démarche. La visite permet de découvrir ce que propose le service, les différents lieux d’accueil et un mot du chargé de mission handicap, depuis chez soi et autant de fois que nécessaire. Elle est disponible en français et en anglais, avec audiodescription.</p>
@@ -1136,7 +1152,7 @@ li.dispo .dispo__detail p{margin:0;}
           </figure>
         </div>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Huit chargées et chargés d’accompagnement se répartissent sur six adresses. C’est l’interlocuteur de votre collège qu’il faut contacter, pas le plus proche géographiquement.</p>
         <div class="carte" id="carte-phase">
           <div class="carte__zone">
@@ -1221,7 +1237,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Sans avance de frais</summary><div class="dispo__detail"><p>Prévoir, si on les a : carte étudiante ou certificat de scolarité, carte vitale ou attestation, carte de mutuelle même dématérialisée.</p></div></details></li>
         </ul>
 
-        <h3>Visite virtuelle</h3>
+        <h3 class="clair">Visite virtuelle</h3>
         <div class="vv-grille">
           <div class="vv-grille__texte">
             <p>Une visite virtuelle permet de repérer les lieux, l’accueil et le déroulement d’une venue : accès au bâtiment, services proposés, équipes. Elle est disponible en français et en anglais, avec audiodescription.</p>
@@ -1234,7 +1250,7 @@ li.dispo .dispo__detail p{margin:0;}
           </figure>
         </div>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>L’Espace santé étudiants est présent sur trois sites : Pessac, Agen et Périgueux.</p>
         <div class="carte" id="carte-ese">
           <div class="carte__zone">
@@ -1317,7 +1333,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Espace calme, pôle vie de campus, sur le campus Carreire</summary><div class="dispo__detail"><p>Hors événements, ce lieu peut servir d’espace calme pour la restauration.</p></div></details></li>
         </ul>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Adressez-vous au bureau de votre campus.</p>
         <div class="carte" id="carte-bve">
           <div class="carte__zone">
@@ -1396,7 +1412,7 @@ li.dispo .dispo__detail p{margin:0;}
         </ul>
       </div>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <div class="carte" id="carte-mapi">
           <div class="carte__zone carte__zone--simple">
             <div>
@@ -1473,7 +1489,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Mission de service public sans coût financier pour les étudiants</summary><div class="dispo__detail"><p>L’intégralité des accompagnements et conseils proposés est totalement gratuite.</p></div></details></li>
         </ul>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>L’Espace Orientation Carrières accueille tous les domaines de formation.</p>
         <div class="carte" id="carte-maoip">
           <div class="carte__zone carte__zone--simple">
@@ -1542,7 +1558,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Information sur les droits liés à la RQTH</summary><div class="dispo__detail"><p>Les droits spécifiques ouverts par la reconnaissance de la qualité de travailleur handicapé peuvent être expliqués en entretien.</p></div></details></li>
         </ul>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Les entretiens se tiennent au bâtiment A33 sur le campus Peixotto, sur les campus de la Victoire et de Montesquieu, ou encore en visioconférence ; le lieu et l’horaire sont communiqués après la prise de rendez-vous.</p>
         <div class="carte" id="carte-ced">
           <div class="carte__zone carte__zone--simple">
@@ -1612,7 +1628,7 @@ li.dispo .dispo__detail p{margin:0;}
           <li class="dispo"><details><summary>Supports lisibles</summary><div class="dispo__detail"><p>Corps de texte suffisant, contrastes soignés, polices sans empattement. Les agents produisant des supports ont été formés à l’accessibilité numérique.</p></div></details></li>
         </ul>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Dix-sept bibliothèques, réparties sur les campus de la métropole et sur quatre sites en région.</p>
         <div class="carte" id="carte-bu">
           <div class="segment" role="group" aria-label="Cadrage de la carte">
@@ -1701,7 +1717,7 @@ li.dispo .dispo__detail p{margin:0;}
         </ul>
       </div>
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Feel &amp; Mouv’ est rattaché au SUAPS, le service universitaire des activités physiques et sportives. L’adresse ci-dessous est celle du secrétariat du SUAPS ; les séances, elles, se tiennent sur différents campus.</p>
         <div class="carte" id="carte-suaps">
           <div class="carte__zone carte__zone--simple">
@@ -1948,7 +1964,7 @@ li.dispo .dispo__detail p{margin:0;}
         </ul>
 
 
-        <h3>Localisation</h3>
+        <h3 class="clair">Localisation</h3>
         <p>Le projet ne dispose pas de bureaux fixes : l’équipe intervient sur l’ensemble des campus. Des rendez-vous peuvent être organisés sur demande, par courriel, au bureau de l’école doctorale sur le campus de la Victoire.</p>
         <p class="visite__actions">
           <a class="bouton bouton--second" href="mailto:bf-atypie.friendly@u-bordeaux.fr">Demander un rendez-vous<span class="cache"> à l’équipe Atypie-Friendly par courriel</span></a>
@@ -2090,7 +2106,7 @@ li.dispo .dispo__detail p{margin:0;}
             <li><strong>Recherche et expertise :</strong> développer la recherche en s’impliquant dans des projets de recherche et les enseignements universitaires.</li>
           </ul>
 
-          <h4>Localisation</h4>
+          <h4 class="clair">Localisation</h4>
           <div class="carte" id="carte-cra">
             <div class="carte__zone carte__zone--simple">
               <div>
