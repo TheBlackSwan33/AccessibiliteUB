@@ -834,6 +834,21 @@ html{scroll-padding-top:6rem;}
 /* Les flottants restent enfermes dans leur rubrique. */
 .section__corps,.souscarte__corps{display:flow-root;}
 
+/* ---------- Video incorporee ----------
+   Le cadre porte le rapport 16/9 et l'iframe le remplit : la largeur donnee
+   par Mediapod, 640 pixels en dur, debordait sur telephone. Le plafond de
+   40 rem evite qu'elle n'ecrase le texte sur un grand ecran. A l'impression,
+   le lecteur ne peut pas lire une video : seule la legende reste, et la
+   regle d'impression du kit y ajoute l'adresse. */
+.video{margin:1.5rem 0 0;max-width:40rem;}
+.video__cadre{
+  aspect-ratio:16/9;background:var(--surface);
+  border:1px solid var(--bord);border-radius:4px;overflow:hidden;
+}
+.video__cadre iframe{display:block;width:100%;height:100%;border:0;}
+.video figcaption{margin-top:.5rem;font-size:.9rem;line-height:1.5;color:var(--doux);}
+@media print{.video__cadre{display:none;}}
+
 /* ---------- Sommaire ----------
    Le kit pose un sommaire a plat. Avec quinze rubriques dont certaines ont un
    titre long et une precision, il devenait difficile a parcourir : on ajoute
@@ -1923,6 +1938,7 @@ li.dispo .dispo__detail p{margin:0;}
           C’est aussi le TDAH, ou les troubles dys comme la dyslexie.</p>
           <p>Le projet existe dans 30 universités en France.
           L’université de Bordeaux fait partie du projet.</p>
+          <p>Une vidéo de 5 minutes présente le projet. <a href="https://mediapod.u-bordeaux.fr/video/56244-atypie-friendly-a-luniversite-de-bordeaux-presentation-du-programme/">Regarder la vidéo</a>.</p>
           <p class="falc-titre">Ce que le projet vous propose</p>
           <ul class="falc-liste">
             <li>Vous pouvez rencontrer l’équipe avant la rentrée.</li>
@@ -1940,6 +1956,14 @@ li.dispo .dispo__detail p{margin:0;}
           <div class="rubrique__texte">
             <p>Le projet « Construire une université Atypie-Friendly » engage une trentaine d’universités, dont l’université de Bordeaux, dans l’inclusion des étudiants et des personnels avec un trouble du neurodéveloppement, de l’entrée dans le supérieur jusqu’à l’insertion professionnelle. Il s’inscrit dans la stratégie nationale pour l’autisme 2018-2028.</p>
             <p>À l’université de Bordeaux, l’ensemble des actions sont réalisées en partenariat étroit avec le Centre Ressource Autisme (CRA) et les différents services spécialisés de l’université. Le projet est également en lien avec les grands programmes CARE (coordonner l’accompagnement à la réussite étudiante), ACCES (accompagner vers l’enseignement supérieur) et NewDEAL (œuvrer pour la réussite des étudiants).</p>
+            <figure class="video">
+              <div class="video__cadre">
+                <iframe src="https://mediapod.u-bordeaux.fr/video/56244-atypie-friendly-a-luniversite-de-bordeaux-presentation-du-programme/?is_iframe=true"
+                        title="Atypie-Friendly à l’université de Bordeaux : présentation du programme"
+                        loading="lazy" allowfullscreen></iframe>
+              </div>
+              <figcaption>Présentation du programme en vidéo, 5 minutes. <a href="https://mediapod.u-bordeaux.fr/video/56244-atypie-friendly-a-luniversite-de-bordeaux-presentation-du-programme/">Voir la vidéo sur Mediapod</a>.</figcaption>
+            </figure>
           </div>
           <div class="fiche">
             <h3>Page web et contacts</h3>
